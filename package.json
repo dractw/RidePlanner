@@ -1,0 +1,32 @@
+{
+  "name": "rideplanner",
+  "version": "1.0.0",
+  "description": "Planning rides",
+  "main": "index.js",
+  "scripts": {
+    "dev": "node index.js",
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dractw/RidePlanner.git"
+  },
+  "author": "dractw@gmail.com",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dractw/RidePlanner/issues"
+  },
+  "homepage": "https://github.com/dractw/RidePlanner#readme",
+  "dependencies": {
+    "telegraf": "^4.6.0",
+    "mongoose": "^6.2.8"
+  },
+  "devDependencies": {
+    "@atomix/eslint-config": "^8.0.0",
+    "eslint": "^7.32.0",
+    "eslint-config-standard": "^16.0.3",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
+}
