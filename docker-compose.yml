@@ -1,0 +1,39 @@
+services:
+  ride_planner:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - PRODUCTION=true
+      - TG_BOT_KEY=$TG_BOT_KEY
+      - MONGO_HOST=localhost
+      - MONGO_PORT=$MONGO_PORT_NUMBER
+    restart: on-failure
+    depends_on:
+      - mongodb
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "200k"
+        max-file: "10"
+    networks:
+      - mongodb_net
+  mongodb:
+    image: bitnami/mongodb:5.0
+    environment:
+      - ALLOW_EMPTY_PASSWORD=no
+      - MONGODB_USERNAME=$MONGO_USER
+      - MONGODB_PASSWORD=$MONGO_PASSWORD
+      - MONGODB_DATABASE=$MONGO_DATABASE
+      - MONGODB_ROOT_PASSWORD=$MONGO_ROOT_PW
+      - MONGODB_PORT_NUMBER=$MONGO_PORT_NUMBER
+      - MONGODB_ADVERTISED_PORT_NUMBER=$MONGO_PORT_NUMBER
+    volumes:
+      - /opt/app/mongodb
+    networks:
+      - mongodb_net
+    ports:
+    - 27017:27017
+networks:
+  mongodb_net:
+    driver: bridge
