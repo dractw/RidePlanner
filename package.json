@@ -19,8 +19,9 @@
   },
   "homepage": "https://github.com/dractw/RidePlanner#readme",
   "dependencies": {
-    "telegraf": "^4.6.0",
-    "mongoose": "^6.2.8"
+    "moment": "^2.0.0",
+    "mongoose": "^6.2.8",
+    "telegraf": "^4.6.0"
   },
   "devDependencies": {
     "@atomix/eslint-config": "^8.0.0",
