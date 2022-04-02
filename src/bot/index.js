@@ -1,4 +1,4 @@
-const create_bot = require('./actions')
+const create_bot = require('./init')
 
 const bot = create_bot()
 
