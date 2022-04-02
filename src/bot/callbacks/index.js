@@ -4,9 +4,9 @@ const { getAllRides } = require('../../handlers')
 
 const main_menu = (ctx) => {
   ctx.reply('@ride_planner_bot', Markup.keyboard([
-    Markup.button.callback(Keyboard_buttons.SHOW_UPCOMING),
+    Markup.button.callback(Keyboard_buttons.SHOW_UPCOMING.title),
 
-    Markup.button.callback(Keyboard_buttons.CREATE_NEW_RIDE),
+    Markup.button.callback(Keyboard_buttons.CREATE_NEW_RIDE.title),
   ]))
 }
 
