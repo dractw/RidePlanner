@@ -5,8 +5,8 @@ const { Rider, Ride } = require('../db/models/index.js')
  * @param ride_params
  * @returns {Promise<Ride>}
  */
-const createRide = (ride_params) => {
-  return new Ride(ride_params).save()
+const createRide = ({ title, author, description, date, start_point, level }) => {
+  return new Ride({ title, author, description, date, start_point, level }).save()
 }
 
 /**
@@ -37,7 +37,7 @@ const getAllRides = (before_date) => {
  * @returns {Promise<*>}
  */
 const createUser = ({ user_id, name, username }) => {
-  return Rider.findOneAndUpdate({ user_id, name, username }, { upsert: true })
+  return Rider.findOneAndUpdate({ user_id, name, username }, { upsert: true, returnNewDocument: true })
 }
 
 /**
