@@ -16,7 +16,6 @@ const show_upcoming_rides = (ctx) => {
       return ctx.reply(JSON.stringify(rides))
     })
     .catch((e) => {
-      ctx.reply('Show upcoming')
     })
 }
 
