@@ -20,7 +20,7 @@
   "homepage": "https://github.com/dractw/RidePlanner#readme",
   "dependencies": {
     "marked": "^4.0.14",
-    "moment": "^2.29.1",
+    "moment": "^2.29.2",
     "mongoose": "^6.2.8",
     "telegraf": "^4.6.0"
   },
