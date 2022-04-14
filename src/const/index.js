@@ -5,6 +5,14 @@ const Keyboard_buttons = {
   SHOW_UPCOMING: {
     title: '🏍 Ближайшие прохваты',
   },
+  SHOW_RIDE: {
+    title: 'Показать поездку',
+    cb: 'find_ride',
+  },
+  FIND_RIDE: {
+    title: 'Найти поездку',
+    cb: 'find_ride',
+  },
   CANCEL: {
     title: '❌ Отменить',
     cb: 'cancel_scene',
@@ -27,9 +35,16 @@ const Keyboard_buttons = {
   },
 }
 
+const levels_cb = {
+  level_easy: Keyboard_buttons.EASY.title,
+  level_hard: Keyboard_buttons.HARD.title,
+  level_mid: Keyboard_buttons.MID.title,
+}
+
 const LEVELS = [Keyboard_buttons.EASY.cb, Keyboard_buttons.HARD.cb, Keyboard_buttons.MID.cb]
 
 module.exports = {
   Keyboard_buttons,
+  levels_cb,
   LEVELS,
 }
