@@ -23,9 +23,10 @@ const createRideScene = (bot) => new Scenes.WizardScene('CREATE_RIDE_WIZARD',
       }
     }
 
-    await ctx.reply('Укажите название поездки', Markup.inlineKeyboard([
-      Markup.button.callback(Keyboard_buttons.CANCEL.title, Keyboard_buttons.CANCEL.cb),
-    ]))
+    await ctx.reply('Укажите название поездки',
+      Markup.inlineKeyboard([
+        Markup.button.callback(Keyboard_buttons.CANCEL.title, Keyboard_buttons.CANCEL.cb),
+      ]))
   },
 
   // SET DATE
@@ -58,7 +59,7 @@ const createRideScene = (bot) => new Scenes.WizardScene('CREATE_RIDE_WIZARD',
       return ctx.wizard.steps[ctx.wizard.cursor](ctx)
     }
 
-    await ctx.reply('Укажите дату и время\n (ДД.ММ.ГГ ЧЧ:ММ)',
+    await ctx.reply('Укажите дату и время (ДД.ММ.ГГ ЧЧ:ММ)',
       Markup.inlineKeyboard([
         Markup.button.callback(Keyboard_buttons.BACK.title, Keyboard_buttons.BACK.cb),
         Markup.button.callback(Keyboard_buttons.CANCEL.title, Keyboard_buttons.CANCEL.cb),
@@ -87,10 +88,11 @@ const createRideScene = (bot) => new Scenes.WizardScene('CREATE_RIDE_WIZARD',
       return ctx.wizard.steps[ctx.wizard.cursor](ctx)
     }
 
-    await ctx.reply('Укажите место старта (адрес или координаты)', Markup.inlineKeyboard([
-      Markup.button.callback(Keyboard_buttons.BACK.title, Keyboard_buttons.BACK.cb),
-      Markup.button.callback(Keyboard_buttons.CANCEL.title, Keyboard_buttons.CANCEL.cb),
-    ]))
+    await ctx.reply('Укажите место старта (адрес или координаты)',
+      Markup.inlineKeyboard([
+        Markup.button.callback(Keyboard_buttons.BACK.title, Keyboard_buttons.BACK.cb),
+        Markup.button.callback(Keyboard_buttons.CANCEL.title, Keyboard_buttons.CANCEL.cb),
+      ]))
   },
 
   // SET LEVEL
@@ -167,9 +169,14 @@ const createRideScene = (bot) => new Scenes.WizardScene('CREATE_RIDE_WIZARD',
 
     const newUser = await createUser({ user_id: id, name, username })
 
-    await createRide({ title, date, level, description, start_point, author: newUser._id, participants: [newUser._id] })
+    const ride_id = await createRide({ title, date, level, description, start_point, author: newUser._id, participants: [newUser._id] })
 
-    ctx.reply('Поездка создана!')
+    if (ride_id) {
+      ctx.replyWithMarkdown(`Поездка создана\n ID: \`${ride_id}\``)
+      ctx.reply('Можете поделиться ID этой поездки с другими участниками, чтобы им было проще её найти.')
+    } else {
+      ctx.reply('🙁 Что-то пошло не так, попробуйте еще раз ')
+    }
 
     return ctx.scene.leave()
   },
