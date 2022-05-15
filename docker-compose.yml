@@ -6,7 +6,7 @@ services:
     environment:
       - PRODUCTION=true
       - TG_BOT_KEY=$TG_BOT_KEY
-      - MONGO_HOST=localhost
+      - MONGO_HOST=mongodb
       - MONGO_PORT=$MONGO_PORT_NUMBER
     restart: on-failure
     depends_on:
