@@ -1,4 +1,4 @@
-const { Telegraf, Scenes, session } = require('telegraf')
+const { Telegraf, Scenes, session, Markup } = require('telegraf')
 const scenes = require('../scenes')
 const { Keyboard_buttons } = require('../../const')
 
@@ -13,8 +13,17 @@ const create_bot = () => {
 }
 
 const register_triggers = (bot, register_scenes_cb) => {
-  bot.start((ctx) => {
-    main_menu(ctx)
+  bot.start(async (ctx) => {
+    if (ctx.message && ctx.message.chat.type === 'private') {
+      main_menu(ctx)
+    } else {
+      ctx.reply('@ride_planner_bot - бот для отслеживания запланированых прохватов и событий\n Напиши ему /start, он тебе всё расскажет ;)')
+    }
+  })
+
+  bot.command('stop', async (ctx) => {
+    await ctx.reply('bot stopped', Markup.removeKeyboard())
+    bot.stop()
   })
 
   return register_scenes_cb(bot)
@@ -33,7 +42,7 @@ const register_actions = (bot) => {
   bot.hears(Keyboard_buttons.SHOW_UPCOMING.title, show_upcoming_rides)
   bot.hears(Keyboard_buttons.CREATE_NEW_RIDE.title, create_new_ride)
   bot.hears(Keyboard_buttons.FIND_RIDE.title, find_ride)
-  triggers.forEach((trigger) => bot.hears(`#${trigger}`, (ctx) => ctx.reply('@ride_planner_bot - бот для отслеживания запланированых прохватов и событий\n Напиши ему `/start`, он тебе всё расскажет ;)')))
+  triggers.forEach((trigger) => bot.command(`${trigger}`, (ctx) => ctx.reply('@ride_planner_bot - бот для отслеживания запланированых прохватов и событий\n Напиши ему /start, он тебе всё расскажет ;)')))
 
   bot.action('step_back', (ctx) => ctx.wizard.back())
   bot.action('cancel_scene', (ctx) => ctx.scene.leave())
