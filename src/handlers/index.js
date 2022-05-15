@@ -22,6 +22,10 @@ const getRide = (id) => {
   return Ride.findOne({ _id: id })
 }
 
+const joinRide = (ride_id, user_id) => {
+  return Ride.updateOne({ _id: ride_id }, { $addToSet: { participants: user_id } })
+}
+
 /**
  * Return all rides
  * @returns Promise<Array<Ride>>
@@ -53,15 +57,20 @@ const createUser = ({ user_id, name, username }) => {
  * @param id
  * @returns {Promise<*>}
  */
-const getUser = (id) => {
-  return Rider.findOne({ user_id: id })
+const getUserByTgId = (tg_id) => {
+  return Rider.findOne({ user_id: tg_id })
+}
+
+const getUserById = (id) => {
+  return Rider.findOne({ _id: id })
 }
 
 module.exports = {
   getAllRides,
   createRide,
   createUser,
-  getUser,
+  getUserById,
+  getUserByTgId,
   getRide,
   joinRide,
 }
