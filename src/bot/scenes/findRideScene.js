@@ -11,7 +11,7 @@ const findRideScene = (bot) => {
     async (ctx) => {
       if (ctx.update.callback_query && ctx.update.callback_query.data === Keyboard_buttons.CANCEL.cb) {
         ctx.reply('Отменено')
-        ctx.scene.leave()
+        return ctx.scene.leave()
       }
 
       if (ctx.message && ctx.message.text) {
