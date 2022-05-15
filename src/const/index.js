@@ -5,12 +5,8 @@ const Keyboard_buttons = {
   SHOW_UPCOMING: {
     title: '🏍 Ближайшие прохваты',
   },
-  SHOW_RIDE: {
-    title: 'Показать поездку',
-    cb: 'find_ride',
-  },
   FIND_RIDE: {
-    title: 'Найти поездку',
+    title: '🔎 Найти поездку',
     cb: 'find_ride',
   },
   CANCEL: {
