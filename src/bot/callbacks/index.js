@@ -11,19 +11,19 @@ const main_menu = (ctx) => {
   ]))
 }
 
-const show_upcoming_rides = (ctx) => {
-  // TODO Create scene
-  getAllRides(Date.now())
-    .then((rides) => {
-      // eslint-disable-next-line id-match
-      const rides_markup_arr = rides.map(({ _id, title, description, date, start_point, level, participants }) => {
-        return Markup.button.callback(`${title.toString().toUpperCase()} / ${levels_cb[level]} / ${date.toLocaleString('ru')}`, `show_specific_ride#${_id}`)
-      })
+const show_upcoming_rides = async (ctx) => {
+  const rides = await getAllRides(Date.now())
 
-      return ctx.reply('Запланированые поездки на ближайшую неделю\nВыберите поездку чтобы узнать подробнее или принять участие', Markup.inlineKeyboard(rides_markup_arr.slice(0, 7), { columns: 1 }))
+  if (rides && rides.length > 0) {
+    // eslint-disable-next-line id-match
+    const rides_markup_arr = rides.map(({ _id, title, description, date, start_point, level, participants }) => {
+      return Markup.button.callback(`${title.toString().toUpperCase()} / ${levels_cb[level]} / ${date.toLocaleString('ru')}`, `show_specific_ride#${_id}`)
     })
-    .catch((e) => {
-    })
+
+    return ctx.reply('Запланированые поездки на ближайшую неделю\nВыберите поездку чтобы узнать подробнее или принять участие', Markup.inlineKeyboard(rides_markup_arr.slice(0, 7), { columns: 1 }))
+  }
+
+  return ctx.reply('😔 На ближайшую неделю ничего не запланировано')
 }
 
 const create_new_ride = async (ctx) => {
