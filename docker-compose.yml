@@ -29,7 +29,7 @@ services:
       - MONGODB_PORT_NUMBER=$MONGO_PORT_NUMBER
       - MONGODB_ADVERTISED_PORT_NUMBER=$MONGO_PORT_NUMBER
     volumes:
-      - /opt/app/mongodb
+      - $DB_VOLUME:/opt/app/mongodb
     networks:
       - mongodb_net
     ports:
