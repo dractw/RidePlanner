@@ -45,6 +45,7 @@ const register_actions = (bot) => {
     }
   })
 
+  console.log('Bot started, ver:', require('../../../package.json').version)
   return bot
 }
 
