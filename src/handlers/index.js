@@ -5,8 +5,8 @@ const { Rider, Ride } = require('../db/models/index.js')
  * @param ride_params
  * @returns {Promise<Ride>}
  */
-const createRide = ({ title, author, description, date, start_point, level }) => {
-  const ride = new Ride({ title, author, description, date, start_point, level })
+const createRide = ({ title, author, description, date, start_point, level, participants }) => {
+  const ride = new Ride({ title, author, description, date, start_point, level, participants })
 
   ride.save()
 
@@ -63,4 +63,5 @@ module.exports = {
   createUser,
   getUser,
   getRide,
+  joinRide,
 }
