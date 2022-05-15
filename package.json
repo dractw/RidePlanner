@@ -1,6 +1,6 @@
 {
   "name": "rideplanner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Planning rides",
   "main": "index.js",
   "scripts": {
