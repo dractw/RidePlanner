@@ -4,7 +4,7 @@ const { Keyboard_buttons } = require('../../const')
 
 const { main_menu, show_upcoming_rides, create_new_ride, find_ride } = require('../callbacks')
 const available_callbacks = require('../callbacks')
-// const trigger_hashtag = ['rides', 'прохват', 'прохваты', 'покататься', 'покатушки', 'покатухи']
+const triggers = ['rides', 'прохват', 'прохваты', 'покататься', 'покатушки', 'покатухи']
 
 const create_bot = () => {
   const bot = new Telegraf(process.env.TG_BOT_KEY)
@@ -33,6 +33,7 @@ const register_actions = (bot) => {
   bot.hears(Keyboard_buttons.SHOW_UPCOMING.title, show_upcoming_rides)
   bot.hears(Keyboard_buttons.CREATE_NEW_RIDE.title, create_new_ride)
   bot.hears(Keyboard_buttons.FIND_RIDE.title, find_ride)
+  triggers.forEach((trigger) => bot.on(trigger, (ctx) => ctx.reply('@ride_planner_bot - бот для отслеживания запланированых прохватов и событий\n Напиши ему `/start`, он тебе всё расскажет ;)')))
 
   bot.action('step_back', (ctx) => ctx.wizard.back())
   bot.action('cancel_scene', (ctx) => ctx.scene.leave())
