@@ -4,7 +4,7 @@ const { Keyboard_buttons } = require('../../const')
 
 const { main_menu, show_upcoming_rides, create_new_ride, find_ride } = require('../callbacks')
 const available_callbacks = require('../callbacks')
-const triggers = ['rides', 'прохват', 'прохваты', 'покататься', 'покатушки', 'покатухи']
+const triggers = ['rides', 'прохват', 'прохваты', 'покататься', 'покатушки', 'покатухи', 'бот']
 
 const create_bot = () => {
   const bot = new Telegraf(process.env.TG_BOT_KEY)
