@@ -31,7 +31,6 @@ const create_new_ride = async (ctx) => {
 }
 
 const find_ride = async (ctx) => {
-  console.log('enters find ride scene')
   ctx.scene.enter('FIND_RIDE_SCENE')
 }
 
