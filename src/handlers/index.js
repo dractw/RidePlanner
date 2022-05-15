@@ -32,7 +32,7 @@ const joinRide = (ride_id, user_id) => {
  * @param before_date Date
  */
 const getAllRides = (before_date) => {
-  const date_param = before_date ? { date: before_date } : {}
+  const date_param = before_date ? { date: { $gte: before_date } } : {}
 
   return Ride.find(date_param)
 }
