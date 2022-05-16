@@ -41,7 +41,7 @@ const register_actions = (bot) => {
   bot.hears(Keyboard_buttons.CREATE_NEW_RIDE.title, create_new_ride)
   bot.hears(Keyboard_buttons.FIND_RIDE.title, find_ride)
   command_triggers.forEach((trigger) => bot.command(`${trigger}`, default_bot_reply))
-  shabang_triggers.forEach((trigger) => bot.on(trigger, default_bot_reply()))
+  shabang_triggers.forEach((trigger) => bot.on(trigger, default_bot_reply))
 
   bot.action('step_back', (ctx) => ctx.wizard.back())
   bot.action('cancel_scene', (ctx) => ctx.scene.leave())
