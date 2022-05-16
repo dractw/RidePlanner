@@ -1,4 +1,5 @@
 const { Telegraf, Scenes, session, Markup } = require('telegraf')
+const marked = require('marked')
 const scenes = require('../scenes')
 const { Keyboard_buttons, shabang_triggers, command_triggers } = require('../../const')
 const { default_bot_reply } = require('../../utils')
@@ -17,6 +18,13 @@ const register_triggers = (bot, register_scenes_cb) => {
     if (ctx.message && ctx.message.chat.type === 'private') {
       main_menu(ctx)
     }
+  })
+
+  bot.command('help', async (ctx) => {
+    ctx.reply('RidePlanner - бот для планирования и поиска поездок.\nНапиши ему в личку /start, и он тебе поможет найти покатуху, или запланировать свою\n')
+    ctx.reply('Находится в активной разработке, так что возможны неприятности :)\n\n\n')
+    await ctx.replyWithHTML(marked.parseInline(`Предложения и баг-трекинг: [Github](https://github.com/dractw/RidePlanner/issues)\nDev: [dractw](tg://user?id=${375130})\n`))
+    await ctx.replyWithHTML(marked.parseInline('Хочешь поддержать?\n- BTC: `1ALnF1TUCxy8zsgxWHFS1hVwAvhwpxy1E8`\n- RUB: 5536913822267734'))
   })
 
   bot.command('stop', async (ctx) => {
@@ -41,7 +49,7 @@ const register_actions = (bot) => {
   bot.hears(Keyboard_buttons.CREATE_NEW_RIDE.title, create_new_ride)
   bot.hears(Keyboard_buttons.FIND_RIDE.title, find_ride)
   command_triggers.forEach((trigger) => bot.command(`${trigger}`, default_bot_reply))
-  shabang_triggers.forEach((trigger) => bot.on(trigger, default_bot_reply))
+  shabang_triggers.forEach((trigger) => bot.hears(trigger, default_bot_reply))
 
   bot.action('step_back', (ctx) => ctx.wizard.back())
   bot.action('cancel_scene', (ctx) => ctx.scene.leave())
