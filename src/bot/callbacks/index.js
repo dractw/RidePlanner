@@ -59,7 +59,7 @@ const show_specific_ride = async (ctx, id, bot, reply) => {
 
     const is_author = ctx.update.callback_query.from.id.toString() === author.user_id.toString()
 
-    const already_participant = !!ride.participants.find((participant) => participant.toString() === user._id.toString())
+    const already_participant = !!ride.participants.find((participant) => participant.toString() === user && user._id.toString())
 
     ctx.replyWithHTML(
       get_ride_markdown(ride, author),
