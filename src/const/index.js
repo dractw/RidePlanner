@@ -39,7 +39,7 @@ const levels_cb = {
 
 const LEVELS = [Keyboard_buttons.EASY.cb, Keyboard_buttons.HARD.cb, Keyboard_buttons.MID.cb]
 const command_triggers = ['ride', 'bot']
-const shabang_triggers = ['#прохват', '#прохваты', '#покатухи', '#покататься', '#бот']
+const shabang_triggers = ['#прохват', '#прохваты', '#покатухи', '#покататься', '#бот', '#покатать']
 
 module.exports = {
   Keyboard_buttons,
