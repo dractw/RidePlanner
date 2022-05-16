@@ -64,7 +64,7 @@ const register_actions = (bot) => {
       const data = ctx.callbackQuery.data.split('#')
 
       if (Object.keys(available_callbacks).includes(data[0])) {
-        available_callbacks[data[0]](ctx, data[1])
+        available_callbacks[data[0]](ctx, data[1], bot)
       }
     }
   })
