@@ -4,7 +4,7 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - PRODUCTION=true
+      - NODE_ENV=$NODE_ENV
       - TG_BOT_KEY=$TG_BOT_KEY
       - MONGO_HOST=mongodb
       - MONGO_PORT_NUMBER=$MONGO_PORT_NUMBER
