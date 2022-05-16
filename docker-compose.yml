@@ -22,7 +22,7 @@ services:
     networks:
       - mongodb_net
   mongodb:
-    image: bitnami/mongodb:5.0
+    image: bitnami/mongodb:latest
     environment:
       - ALLOW_EMPTY_PASSWORD=no
       - MONGODB_USERNAME=$MONGO_USER
