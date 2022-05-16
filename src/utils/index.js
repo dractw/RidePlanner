@@ -17,7 +17,8 @@ const get_ride_markdown = (ride, author) => {
   return marked.parseInline(Object.keys(markdown_obj).reduce((acc, next) => acc + markdown_obj[next] + '\n', ''))
 }
 
-const default_bot_reply = (ctx) => ctx.reply('@ride_planner_bot - бот для отслеживания запланированых прохватов и событий\n Напиши ему /start в личные сообщения, он тебе всё расскажет ;)')
+const default_bot_reply = async (ctx) => await ctx.reply('@ride_planner_bot - бот для отслеживания запланированых прохватов и событий\n Напиши ему /start в личные сообщения, он тебе всё расскажет ;)')
+  .catch((e) => console.error('Something  bad happens:', e))
 
 module.exports = {
   get_ride_markdown,

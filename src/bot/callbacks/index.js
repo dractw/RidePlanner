@@ -3,12 +3,12 @@ const { Keyboard_buttons, levels_cb } = require('../../const')
 const { getAllRides, getRide, getUserById, getUserByTgId, joinRide, createUser } = require('../../handlers')
 const { get_ride_markdown, default_bot_reply } = require('../../utils')
 
-const main_menu = (ctx) => {
-  ctx.reply('@ride_planner_bot', Markup.keyboard([
+const main_menu = async (ctx) => {
+  await ctx.reply('@ride_planner_bot', Markup.keyboard([
     Markup.button.callback(Keyboard_buttons.SHOW_UPCOMING.title),
     Markup.button.callback(Keyboard_buttons.CREATE_NEW_RIDE.title),
     Markup.button.callback(Keyboard_buttons.FIND_RIDE.title),
-  ]))
+  ])).catch((e) => console.error('Something  bad happens:', e))
 }
 
 const show_upcoming_rides = async (ctx) => {
