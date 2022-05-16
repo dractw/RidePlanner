@@ -32,7 +32,7 @@ services:
       - MONGODB_PORT_NUMBER=$MONGO_PORT_NUMBER
       - MONGODB_ADVERTISED_PORT_NUMBER=$MONGO_PORT_NUMBER
     volumes:
-      - $DB_VOLUME:/opt/app/mongodb
+      - $DB_VOLUME:/bitnami/mongodb
     restart: on-failure
     networks:
       - mongodb_net
