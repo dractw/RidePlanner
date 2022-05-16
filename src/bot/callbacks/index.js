@@ -55,7 +55,7 @@ const show_specific_ride = async (ctx, id, bot, reply) => {
 
   if (ride) {
     const author = await getUserById(ride.author)
-    const user = ctx.update.callback_query.from.id === author.user_id ? author : await getUserByTgId(ctx.update.callback_query.from.id)
+    const user = ctx.update.callback_query.from.id === author.user_id ? author : await getUserByTgId(ctx.update.callback_query.from.id).catch((e) => {})
 
     const is_author = ctx.update.callback_query.from.id.toString() === author.user_id.toString()
 
