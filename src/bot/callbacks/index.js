@@ -12,7 +12,7 @@ const main_menu = (ctx) => {
 }
 
 const show_upcoming_rides = async (ctx) => {
-  if (ctx.message && ctx.message.chat.type === 'private') {
+  if (ctx.message && ctx.message.chat.type !== 'private') {
     return default_bot_reply(ctx)
   }
 
@@ -31,7 +31,7 @@ const show_upcoming_rides = async (ctx) => {
 }
 
 const create_new_ride = async (ctx) => {
-  if (ctx.message && ctx.message.chat.type === 'private') {
+  if (ctx.message && ctx.message.chat.type !== 'private') {
     return default_bot_reply(ctx)
   }
 
@@ -39,7 +39,7 @@ const create_new_ride = async (ctx) => {
 }
 
 const find_ride = async (ctx) => {
-  if (ctx.message && ctx.message.chat.type === 'private') {
+  if (ctx.message && ctx.message.chat.type !== 'private') {
     return default_bot_reply(ctx)
   }
 
