@@ -1,10 +1,10 @@
 const { Markup } = require('telegraf')
 const { Keyboard_buttons, levels_cb } = require('../../const')
-const { getAllRides, getRide, getUserById, getUserByTgId, joinRide, createUser } = require('../../handlers')
-const { get_ride_markdown, default_bot_reply } = require('../../utils')
+const { getAllRides, getRide, getUserById, getUserByTgId, joinRide, createUser, leaveRide, cancelRide, editRide } = require('../../handlers')
+const { get_ride_markdown, default_bot_reply, get_bot_name } = require('../../utils')
 
 const main_menu = async (ctx) => {
-  await ctx.reply('@ride_planner_bot', Markup.keyboard([
+  await ctx.reply(get_bot_name(), Markup.keyboard([
     Markup.button.callback(Keyboard_buttons.SHOW_UPCOMING.title),
     Markup.button.callback(Keyboard_buttons.CREATE_NEW_RIDE.title),
     Markup.button.callback(Keyboard_buttons.FIND_RIDE.title),
@@ -46,17 +46,29 @@ const find_ride = async (ctx) => {
   ctx.scene.enter('FIND_RIDE_SCENE')
 }
 
-const show_specific_ride = async (ctx, id) => {
+const show_specific_ride = async (ctx, id, bot, reply) => {
+  if (reply) {
+    ctx.reply(reply)
+  }
+
   const ride = await getRide(id)
 
   if (ride) {
     const author = await getUserById(ride.author)
+    const user = ctx.update.callback_query.from.id === author.user_id ? author : await getUserByTgId(ctx.update.callback_query.from.id)
+
+    const is_author = ctx.update.callback_query.from.id.toString() === author.user_id.toString()
+
+    const already_participant = !!ride.participants.find((participant) => participant.toString() === user._id.toString())
 
     ctx.replyWithHTML(
       get_ride_markdown(ride, author),
       Markup.inlineKeyboard([
-        Markup.button.callback('Я поеду!', `join_ride#${ride._id}`),
-      ]),
+        // Markup.button.callback('✏️ Редактировать поездку', `edit_ride#${ride._id}`, !is_author),
+        Markup.button.callback('❌ Отменить поездку!', `cancel_ride#${ride._id}`, !is_author),
+        Markup.button.callback('👌 Я поеду!', `join_ride#${ride._id}`, is_author || already_participant),
+        Markup.button.callback('❌ Отменить участие', `leave_ride#${ride._id}`, is_author || !already_participant),
+      ], { columns: 1 }),
     )
   } else {
     ctx.reply('Поездки не существует')
@@ -76,10 +88,36 @@ const join_ride = async (ctx, ride_id) => {
   const joined = await joinRide(ride_id, user._id)
 
   if (joined.modifiedCount > 0) {
-    ctx.reply('Вы добавлены в участники\nЯ постараюсь вам напомнить о поездке за 24 часа (но это не точно)')
-  } else {
-    ctx.reply('Вы уже учавствуете')
+    await show_specific_ride(ctx, ride_id, undefined, 'Вы добавлены в участники\nЯ постараюсь вам напомнить о поездке за 24 часа (но это не точно)')
   }
+}
+
+const leave_ride = async (ctx, ride_id) => {
+  const { id } = ctx.update.callback_query.from
+
+  const user = await getUserByTgId(id)
+
+  await leaveRide(ride_id, user._id)
+
+  await show_specific_ride(ctx, ride_id, undefined, 'Вы отменили участие')
+}
+
+const cancel_ride = async (ctx, ride_id, bot) => {
+  const ride = await getRide(ride_id)
+  const author = await getUserById(ride.author)
+
+  await cancelRide(ride_id)
+
+  ride.participants.forEach(async (participant) => {
+    const user = await getUserById(participant)
+
+    if (user.user_id !== author.user_id) {
+      await bot.telegram.sendMessage(user.user_id, get_ride_markdown(ride, author, '😔 Поездка, в которой вы учавствовали, была отменена организатором. 😔'), { parse_mode: 'HTML' })
+    }
+  })
+
+  await ctx.reply('😔 Поездка была отменена.')
+  show_upcoming_rides(ctx)
 }
 
 module.exports = {
@@ -89,4 +127,6 @@ module.exports = {
   show_upcoming_rides,
   join_ride,
   find_ride,
+  leave_ride,
+  cancel_ride,
 }
