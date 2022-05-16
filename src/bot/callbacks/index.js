@@ -1,7 +1,7 @@
 const { Markup } = require('telegraf')
 const { Keyboard_buttons, levels_cb } = require('../../const')
 const { getAllRides, getRide, getUserById, getUserByTgId, joinRide, createUser } = require('../../handlers')
-const { get_ride_markdown } = require('../../utils')
+const { get_ride_markdown, default_bot_reply } = require('../../utils')
 
 const main_menu = (ctx) => {
   ctx.reply('@ride_planner_bot', Markup.keyboard([
@@ -12,6 +12,10 @@ const main_menu = (ctx) => {
 }
 
 const show_upcoming_rides = async (ctx) => {
+  if (ctx.message && ctx.message.chat.type === 'private') {
+    return default_bot_reply(ctx)
+  }
+
   const rides = await getAllRides(Date.now())
 
   if (rides && rides.length > 0) {
@@ -27,10 +31,18 @@ const show_upcoming_rides = async (ctx) => {
 }
 
 const create_new_ride = async (ctx) => {
+  if (ctx.message && ctx.message.chat.type === 'private') {
+    return default_bot_reply(ctx)
+  }
+
   ctx.scene.enter('CREATE_RIDE_WIZARD')
 }
 
 const find_ride = async (ctx) => {
+  if (ctx.message && ctx.message.chat.type === 'private') {
+    return default_bot_reply(ctx)
+  }
+
   ctx.scene.enter('FIND_RIDE_SCENE')
 }
 
