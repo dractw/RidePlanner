@@ -25,7 +25,6 @@ To ensure that data wont be wiped out after recreating docker container, be awar
 eg. with `DB_VOLUME=/opt/app/mongo_volume`
 ```
 chown -R 1001 /opt/app/mongo_volume
-
 ```
 
 #### Timezone
