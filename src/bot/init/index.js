@@ -69,7 +69,10 @@ const register_actions = (bot) => {
     }
   })
 
-  console.log('Bot started, ver:', require('../../../package.json').version)
+  const { NODE_ENV } = process.env
+
+  console.info('Bot started, ver:', require('../../../package.json').version)
+  console.info(`Running ${NODE_ENV.toUpperCase()} environment`)
   return bot
 }
 
