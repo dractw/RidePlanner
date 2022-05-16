@@ -26,6 +26,18 @@ const joinRide = (ride_id, user_id) => {
   return Ride.updateOne({ _id: ride_id }, { $addToSet: { participants: user_id } })
 }
 
+const leaveRide = async (ride_id, user_id) => {
+  return Ride.updateOne({ _id: ride_id }, { $pull: { participants: user_id } })
+}
+
+const editRide = async (ride_id, new_params) => {
+  //
+}
+
+const cancelRide = async (ride_id) => {
+  return Ride.deleteOne({ _id: ride_id })
+}
+
 /**
  * Return all rides
  * @returns Promise<Array<Ride>>
@@ -73,4 +85,7 @@ module.exports = {
   getUserByTgId,
   getRide,
   joinRide,
+  leaveRide,
+  cancelRide,
+  editRide,
 }
