@@ -17,6 +17,8 @@ const register_triggers = (bot, register_scenes_cb) => {
   bot.start(async (ctx) => {
     if (ctx.message && ctx.message.chat.type === 'private') {
       main_menu(ctx)
+    } else {
+      default_bot_reply(ctx)
     }
   })
 
