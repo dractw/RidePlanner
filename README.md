@@ -9,8 +9,8 @@ Create `.env` file with required variables ([example](https://github.com/dractw/
 Simply run `npm i`
 
 # Run
-Dev `npm run dev`
-Prod `npm start` 
+- Dev `npm run dev`
+- Prod `npm start` 
 
 ## Deploy
 Create `.env` file with required variables ([example](https://github.com/dractw/RidePlanner/blob/main/.env.example))
