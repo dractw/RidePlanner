@@ -231,7 +231,7 @@ const createRideScene = (bot) => {
         return ctx.wizard.steps[ctx.wizard.cursor](ctx)
       }
 
-      await ctx.reply('Укажите место старта (адрес или координаты)',
+      await ctx.reply('Укажите место старта (Очень желательно указать точный адрес или координаты, чтобы другие участники проще вас нашли)',
         Markup.inlineKeyboard([
           Markup.button.callback(Keyboard_buttons.BACK.title, Keyboard_buttons.BACK.cb),
           Markup.button.callback(Keyboard_buttons.CANCEL.title, Keyboard_buttons.CANCEL.cb),
