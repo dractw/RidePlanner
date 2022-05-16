@@ -10,6 +10,8 @@ const get_bot_name = () => {
       return '@ride_planner_bot'
     case 'dev':
       return '@ride_planner_dev_bot'
+    default:
+      return '@ride_planner_bot'
   }
 }
 
