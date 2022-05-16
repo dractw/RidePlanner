@@ -23,8 +23,7 @@ const register_triggers = (bot, register_scenes_cb) => {
   })
 
   bot.command('help', async (ctx) => {
-    ctx.reply('RidePlanner - бот для планирования и поиска поездок.\nНапиши ему в личку /start, и он тебе поможет найти покатуху, или запланировать свою\n')
-    ctx.reply('Находится в активной разработке, так что возможны неприятности :)\n\n\n')
+    await ctx.reply('RidePlanner - бот для планирования и поиска поездок.\nНапиши ему в личку /start, и он тебе поможет найти покатуху, или запланировать свою\nНаходится в активной разработке, так что возможны неприятности :)\n\n\n')
     await ctx.replyWithHTML(marked.parseInline(`Предложения и баг-трекинг: [Github](https://github.com/dractw/RidePlanner/issues)\nDev: [dractw](tg://user?id=${375130})\n`))
     await ctx.replyWithHTML(marked.parseInline('Хочешь поддержать?\n- BTC: `1ALnF1TUCxy8zsgxWHFS1hVwAvhwpxy1E8`\n- RUB: 5536913822267734'))
   })
