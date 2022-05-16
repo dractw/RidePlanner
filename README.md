@@ -8,7 +8,7 @@ _Under active development_
 
 - Run `npm i`
 
-# Run
+## Run
 - Dev `npm run dev`
 - Prod `npm start` 
 
