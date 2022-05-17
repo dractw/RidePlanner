@@ -23,11 +23,15 @@ const register_triggers = (bot, register_scenes_cb) => {
     }
   })
 
-  bot.command('bot', (ctx) => {
-    const { first_name, last_name, username } = ctx.message.from
-    const mention = `${username || first_name || last_name}`
+  bot.command('bot', async (ctx) => {
+    try {
+      await bot.telegram.sendMessage(ctx.message.from.id, 'Привет! Я на связи. 😉')
+    } catch (e) {
+      const { first_name, last_name, username } = ctx.message.from
+      const mention = `${username || first_name || last_name}`
 
-    ctx.replyWithHTML(marked.parseInline(`@${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
+      ctx.replyWithHTML(marked.parseInline(`@${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
+    }
   })
 
   bot.command('help', async (ctx) => {
