@@ -1,4 +1,6 @@
 const { Markup } = require('telegraf')
+const marked = require('marked')
+const moment = require('moment')
 const { Keyboard_buttons, levels_cb } = require('../../const')
 const { getAllRides, getRide, getUserById, getUserByTgId, joinRide, createUser, leaveRide, cancelRide, editRide } = require('../../handlers')
 const { get_ride_markdown, default_bot_reply, get_bot_name } = require('../../utils')
@@ -21,7 +23,7 @@ const show_upcoming_rides = async (ctx) => {
   if (rides && rides.length > 0) {
     // eslint-disable-next-line id-match
     const rides_markup_arr = rides.map(({ _id, title, description, date, start_point, level, participants }) => {
-      return Markup.button.callback(`${title.toString().toUpperCase()} / ${levels_cb[level]} / ${date.toLocaleString('ru')}`, `show_specific_ride#${_id}`)
+      return Markup.button.callback(`${title.toString().toUpperCase()} / ${levels_cb[level]} / ${moment(date).locale('ru').format('DD.MM.YYYY, hh:mm')}`, `show_specific_ride#${_id}`)
     })
 
     return ctx.reply('Запланированые поездки на ближайшую неделю\nВыберите поездку чтобы узнать подробнее или принять участие', Markup.inlineKeyboard(rides_markup_arr.slice(0, 7), { columns: 1 }))
@@ -57,6 +59,8 @@ const show_specific_ride = async (ctx, id, bot, reply) => {
     const author = await getUserById(ride.author)
     const user = ctx.update.callback_query.from.id === author.user_id ? author : await getUserByTgId(ctx.update.callback_query.from.id).catch((e) => {})
 
+    const no_participants = ride.participants.length < 2
+
     const is_author = ctx.update.callback_query.from.id.toString() === author.user_id.toString()
 
     const already_participant = !!ride.participants.find((participant) => participant.toString() === (user && user._id.toString()))
@@ -64,6 +68,7 @@ const show_specific_ride = async (ctx, id, bot, reply) => {
     ctx.replyWithHTML(
       get_ride_markdown(ride, author),
       Markup.inlineKeyboard([
+        Markup.button.callback('🤘 Показать участников', `show_ride_participants#${ride._id}`, no_participants),
         // Markup.button.callback('✏️ Редактировать поездку', `edit_ride#${ride._id}`, !is_author),
         Markup.button.callback('❌ Отменить поездку!', `cancel_ride#${ride._id}`, !is_author),
         Markup.button.callback('👌 Я поеду!', `join_ride#${ride._id}`, is_author || already_participant),
@@ -73,6 +78,23 @@ const show_specific_ride = async (ctx, id, bot, reply) => {
   } else {
     ctx.reply('Поездки не существует')
   }
+}
+
+const show_ride_participants = async (ctx, ride_id) => {
+  const ride = await getRide(ride_id)
+
+  const participants = [`🤘 Список участников **${ride.title} / ${moment(ride.date).locale('ru').format('DD.MM.YYYY, hh:mm')}** 🤘\n\n`]
+
+  for (let index = 0; index < ride.participants.length; index++) {
+    const participant = ride.participants[index]
+
+    const user = await getUserById(participant)
+    const { username, name, user_id } = user
+
+    participants.push(`${index + 1}. ${name || username} ([Написать](tg://user?id=${user_id}))\n`)
+  }
+
+  ctx.replyWithHTML(marked.parseInline(participants.join('')))
 }
 
 const join_ride = async (ctx, ride_id) => {
@@ -125,6 +147,7 @@ module.exports = {
   create_new_ride,
   show_specific_ride,
   show_upcoming_rides,
+  show_ride_participants,
   join_ride,
   find_ride,
   leave_ride,
