@@ -1,7 +1,7 @@
 const { Telegraf, Scenes, session, Markup } = require('telegraf')
 const marked = require('marked')
 const scenes = require('../scenes')
-const { Keyboard_buttons, shabang_triggers, command_triggers } = require('../../const')
+const { Keyboard_buttons, shabang_triggers } = require('../../const')
 const { default_bot_reply } = require('../../utils')
 
 const { main_menu, show_upcoming_rides, create_new_ride, find_ride } = require('../callbacks')
