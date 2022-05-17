@@ -25,7 +25,7 @@ const register_triggers = (bot, register_scenes_cb) => {
 
   bot.command('bot', async (ctx) => {
     try {
-      await bot.telegram.sendMessage(ctx.message.from.id, 'Привет! Я на связи. 😉')
+      await bot.telegram.sendMessage(ctx.message.from.id, 'Привет, я на связи! 😉')
     } catch (e) {
       const { first_name, last_name, username } = ctx.message.from
       const mention = `${username || first_name || last_name}`
