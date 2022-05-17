@@ -17,8 +17,6 @@ const register_triggers = (bot, register_scenes_cb) => {
   bot.start(async (ctx) => {
     if (ctx.message && ctx.message.chat.type === 'private') {
       main_menu(ctx)
-    } else {
-      default_bot_reply(ctx)
     }
   })
 
@@ -32,9 +30,11 @@ const register_triggers = (bot, register_scenes_cb) => {
   })
 
   bot.command('stop', async (ctx) => {
-    await ctx.reply('bot stopped', Markup.removeKeyboard())
-      .catch((e) => console.error('Something  bad happens:', e))
-    bot.stop()
+    if (ctx.message && ctx.message.chat.type === 'private') {
+      await ctx.reply('bot stopped', Markup.removeKeyboard())
+        .catch((e) => console.error('Something  bad happens:', e))
+      bot.stop()
+    }
   })
 
   return register_scenes_cb(bot)
@@ -53,7 +53,6 @@ const register_actions = (bot) => {
   bot.hears(Keyboard_buttons.SHOW_UPCOMING.title, show_upcoming_rides)
   bot.hears(Keyboard_buttons.CREATE_NEW_RIDE.title, create_new_ride)
   bot.hears(Keyboard_buttons.FIND_RIDE.title, find_ride)
-  command_triggers.forEach((trigger) => bot.command(`${trigger}`, default_bot_reply))
   shabang_triggers.forEach((trigger) => bot.hears(trigger, default_bot_reply))
 
   bot.action('step_back', (ctx) => ctx.wizard.back())
