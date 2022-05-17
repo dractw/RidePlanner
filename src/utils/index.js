@@ -17,7 +17,7 @@ const get_bot_name = () => {
 
 const get_ride_markdown = (ride, author, external_message) => {
   const { title, date, start_point, level, participants, description, _id } = ride
-  const show_name = author.name ? `${name.replace('undefined', `${author.username || ''}`).trim()}` : author.username
+  const show_name = author.name ? `${author.name.replace('undefined', `${author.username || ''}`).trim()}` : author.username
 
   const markdown_obj = {
     title: `**${title.toString().toUpperCase()}** (\`${_id}\`)`,
