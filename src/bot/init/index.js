@@ -24,10 +24,10 @@ const register_triggers = (bot, register_scenes_cb) => {
   })
 
   bot.command('bot', (ctx) => {
-    const { first_name, last_name, username, user_id } = ctx.message.from
+    const { first_name, last_name, username } = ctx.message.from
     const mention = `${username || first_name || last_name}`
 
-    ctx.replyWithHTML(marked.parseInline(`[${mention}](tg://user?id=${user_id}) Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
+    ctx.replyWithHTML(marked.parseInline(`@${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
   })
 
   bot.command('help', async (ctx) => {
