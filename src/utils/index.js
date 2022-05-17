@@ -17,6 +17,8 @@ const get_bot_name = () => {
 
 const get_ride_markdown = (ride, author, external_message) => {
   const { title, date, start_point, level, participants, description, _id } = ride
+  const show_name = author.name ? `${author.name.replace('undefined', `${author.username || ''}`).trim()}` : author.username
+
   const markdown_obj = {
     title: `**${title.toString().toUpperCase()}** (\`${_id}\`)`,
     date: `Начало: ${moment(date).locale('ru').format('DD.MM.YYYY, hh:mm')} `,
@@ -24,7 +26,7 @@ const get_ride_markdown = (ride, author, external_message) => {
     level: `Сложность: ${levels_cb[level]}`,
     participants: `Кол-во участников: ${participants.length} `,
     description: `Инфо: _${description}_`,
-    author: `Орг: [${author.username}](tg://user?id=${author.user_id})`,
+    author: `Орг: [${show_name}](tg://user?id=${author.user_id})`,
   }
 
   return marked.parseInline(Object.keys(markdown_obj).reduce((acc, next) => acc + markdown_obj[next] + '\n', external_message ? `${external_message}\n\n` : ''))

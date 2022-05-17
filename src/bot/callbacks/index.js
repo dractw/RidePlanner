@@ -48,6 +48,14 @@ const find_ride = async (ctx) => {
   ctx.scene.enter('FIND_RIDE_SCENE')
 }
 
+const notify_participants = async (ctx, ride_id) => {
+  if (ctx.message && ctx.message.chat.type !== 'private') {
+    return default_bot_reply(ctx)
+  }
+
+  ctx.scene.enter('NOTIFY_PARTICIPANTS_SCENE', { ride_id })
+}
+
 const show_specific_ride = async (ctx, id, bot, reply) => {
   if (reply) {
     ctx.reply(reply)
@@ -82,6 +90,11 @@ const show_specific_ride = async (ctx, id, bot, reply) => {
 
 const show_ride_participants = async (ctx, ride_id) => {
   const ride = await getRide(ride_id)
+  const { id } = ctx.update.callback_query.from
+
+  const user = await getUserByTgId(id)
+
+  const is_author = user && (ride.author.toString() === user._id.toString())
 
   const participants = [`🤘 Список участников **${ride.title} / ${moment(ride.date).locale('ru').format('DD.MM.YYYY, hh:mm')}** 🤘\n\n`]
 
@@ -91,10 +104,17 @@ const show_ride_participants = async (ctx, ride_id) => {
     const user = await getUserById(participant)
     const { username, name, user_id } = user
 
-    participants.push(`${index + 1}. ${name || username} ([Написать](tg://user?id=${user_id}))\n`)
+    const show_name = name ? `${name.replace('undefined', `${username || ''}`).trim()}` : username
+
+    participants.push(`${index + 1}. ${show_name} ([Написать](tg://user?id=${user_id}))\n`)
   }
 
-  ctx.replyWithHTML(marked.parseInline(participants.join('')))
+  ctx.replyWithHTML(
+    marked.parseInline(participants.join('')),
+    Markup.inlineKeyboard([
+      Markup.button.callback(Keyboard_buttons.NOTIFY_PARTICIPANTS.title, `notify_participants#${ride._id}`, !is_author),
+    ]),
+  )
 }
 
 const join_ride = async (ctx, ride_id) => {
@@ -152,4 +172,5 @@ module.exports = {
   find_ride,
   leave_ride,
   cancel_ride,
+  notify_participants,
 }
