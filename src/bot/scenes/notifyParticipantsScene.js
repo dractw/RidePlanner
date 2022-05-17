@@ -32,12 +32,9 @@ const findRideScene = (bot) => {
         if (ride && ctx.message.text) {
           const author = await getUserById(ride.author)
 
-          console.log(ctx.message.text)
           ctx.scene.state.author = author
           ctx.scene.state.ride = ride
           ctx.scene.state.message = ctx.message.text
-
-          console.log('state', ctx.scene.state.message)
 
           ctx.wizard.next()
           return ctx.wizard.steps[ctx.wizard.cursor](ctx)
