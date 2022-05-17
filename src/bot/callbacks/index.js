@@ -91,7 +91,7 @@ const show_ride_participants = async (ctx, ride_id) => {
     const user = await getUserById(participant)
     const { username, name, user_id } = user
 
-    participants.push(`${index + 1}. ${name || username} ([Написать](tg://user?id=${user_id}))\n`)
+    participants.push(`${index + 1}. ${name.replace('undefined', '').trim() || username} ([Написать](tg://user?id=${user_id}))\n`)
   }
 
   ctx.replyWithHTML(marked.parseInline(participants.join('')))
