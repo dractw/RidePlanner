@@ -9,6 +9,10 @@ const Keyboard_buttons = {
     title: '🔎 Найти поездку',
     cb: 'find_ride',
   },
+  NOTIFY_PARTICIPANTS: {
+    title: '📣 Уведомление для участников',
+    cb: 'notify_participants',
+  },
   CANCEL: {
     title: '❌ Отменить',
     cb: 'cancel_scene',

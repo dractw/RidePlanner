@@ -57,11 +57,7 @@ const getAllRides = (before_date) => {
  * @returns {Promise<*>}
  */
 const createUser = ({ user_id, name, username }) => {
-  const rider = new Rider({ user_id, name, username })
-
-  rider.save()
-
-  return rider
+  return Rider.findOneAndUpdate({ user_id }, { user_id, name, username }, { new: true, upsert: true })
 }
 
 /**
