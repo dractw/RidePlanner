@@ -17,11 +17,21 @@ const register_triggers = (bot, register_scenes_cb) => {
   bot.start(async (ctx) => {
     if (ctx.message && ctx.message.chat.type === 'private') {
       main_menu(ctx)
+      const markup = `Привет, ${ctx.message.from.first_name || ctx.message.from.username} 👋\n\nRidePlanner - бот для планирования и поиска поездок.\nОн поможет тебе найти покатуху на ближайшую неделю, или организовать свою.\n\n**Для начала загляни в меню!**`
+
+      await ctx.replyWithHTML(marked.parseInline(markup))
     }
   })
 
+  bot.command('bot', (ctx) => {
+    const { first_name, last_name, username, user_id } = ctx.message.from
+    const mention = `${username || first_name || last_name}`
+
+    ctx.replyWithHTML(marked.parseInline(`[${mention}](tg://user?id=${user_id}) Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
+  })
+
   bot.command('help', async (ctx) => {
-    await ctx.reply('RidePlanner - бот для планирования и поиска поездок.\nНапиши ему в личку, и он тебе поможет найти покатуху, или запланировать свою\nНаходится в активной разработке, так что возможны неприятности :)\n\n\n')
+    await ctx.reply('RidePlanner - бот для планирования и поиска поездок.\nНаходится в активной разработке, так что возможны неприятности :)\n\n\n')
       .catch((e) => console.error('Something  bad happens:', e))
     await ctx.replyWithHTML(marked.parseInline(`Предложения и баг-трекинг: [Github](https://github.com/dractw/RidePlanner/issues)\nDev: [dractw](tg://user?id=${375130})\n`))
       .catch((e) => console.error('Something  bad happens:', e))
