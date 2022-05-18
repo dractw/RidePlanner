@@ -102,7 +102,7 @@ const register_actions = (bot) => {
 
       const { link } = welcome_message[id.toString()]
 
-      ctx.replyWithHTML(marked.parseInline(`👋 Добро пожаловать в чат ${title}, ${mention}! Для хорошего старта - [ознакомьтесь с правилами сообщества](${link})`))
+      ctx.replyWithHTML(marked.parseInline(`👋 Добро пожаловать в чат ${title}, ${mention}! Для хорошего старта - [ознакомьтесь с правилами сообщества](${link})`), { disable_web_page_preview: true })
     }
   })
 
