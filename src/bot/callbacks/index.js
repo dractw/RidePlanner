@@ -26,6 +26,7 @@ const show_upcoming_rides = async (ctx) => {
       return Markup.button.callback(`${title.toString().toUpperCase()} / ${levels_cb[level]} / ${moment(date).locale('ru').format('DD.MM.YYYY, hh:mm')}`, `show_specific_ride#${_id}`)
     })
 
+    // @TODO create const variable with specified date range instead magic 61
     return ctx.reply('Запланированые поездки на ближайшие 2 месяца\nВыберите поездку чтобы узнать подробнее или принять участие', Markup.inlineKeyboard(rides_markup_arr.slice(0, 61), { columns: 1 }))
   }
 
