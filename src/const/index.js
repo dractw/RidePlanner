@@ -1,3 +1,5 @@
+const welcome_message = require('./welcome_message')
+
 const Keyboard_buttons = {
   CREATE_NEW_RIDE: {
     title: '🗺 Запланировать новый',
@@ -51,4 +53,5 @@ module.exports = {
   LEVELS,
   command_triggers,
   shabang_triggers,
+  welcome_message,
 }
