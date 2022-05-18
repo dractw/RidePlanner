@@ -1,7 +1,7 @@
 const { Telegraf, Scenes, session, Markup } = require('telegraf')
 const marked = require('marked')
 const scenes = require('../scenes')
-const { Keyboard_buttons, shabang_triggers } = require('../../const')
+const { Keyboard_buttons, shabang_triggers, welcome_message } = require('../../const')
 const { default_bot_reply } = require('../../utils')
 
 const { main_menu, show_upcoming_rides, create_new_ride, find_ride } = require('../callbacks')
@@ -87,7 +87,24 @@ const register_actions = (bot) => {
     }
   })
 
-  bot.on('new_chat_members', (ctx) => console.log(ctx, ctx.message))
+  bot.on('new_chat_members', (ctx) => {
+    const { first_name, last_name, username } = ctx.message.from
+    const { id, title } = ctx.message.chat
+
+    if (welcome_message[id.toString()]) {
+      let mention
+
+      if (username) {
+        mention = `@${username}`
+      } else {
+        mention = `[${first_name || last_name}](tg://user?id=${id})`
+      }
+
+      const { link } = welcome_message[id.toString()]
+
+      ctx.replyWithHTML(marked.parseInline(`👋 Добро пожаловать в чат ${title}, ${mention}! Для хорошего старта - [ознакомьтесь с правилами сообщества](${link})`))
+    }
+  })
 
   const { NODE_ENV } = process.env
 
