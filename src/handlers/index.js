@@ -43,6 +43,8 @@ const cancelRide = async (ride_id) => {
  * @returns Promise<Array<Ride>>
  * @param before_date Date
  */
+
+// @TODO add $lte param to fetch specific range
 const getAllRides = (before_date) => {
   const date_param = before_date ? { date: { $gte: before_date } } : {}
 
