@@ -27,10 +27,16 @@ const register_triggers = (bot, register_scenes_cb) => {
     try {
       await bot.telegram.sendMessage(ctx.message.from.id, 'Привет, я на связи! 😉')
     } catch (e) {
-      const { first_name, last_name, username } = ctx.message.from
-      const mention = `${username || first_name || last_name}`
+      const { first_name, last_name, username, id } = ctx.message.from
+      let mention
 
-      ctx.replyWithHTML(marked.parseInline(`@${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
+      if (username) {
+        mention = `@${username}`
+      } else {
+        mention = `[${first_name || last_name}](tg://user?id=${id})`
+      }
+
+      ctx.replyWithHTML(marked.parseInline(`${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
     }
   })
 
