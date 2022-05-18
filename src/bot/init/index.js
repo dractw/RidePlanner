@@ -24,20 +24,19 @@ const register_triggers = (bot, register_scenes_cb) => {
   })
 
   bot.command('bot', async (ctx) => {
-    try {
-      await bot.telegram.sendMessage(ctx.message.from.id, 'Привет, я на связи! 😉')
-    } catch (e) {
-      const { first_name, last_name, username, id } = ctx.message.from
-      let mention
+    await bot.telegram.sendMessage(ctx.message.from.id, 'Привет, я на связи! 😉')
+      .catch((e) => {
+        const { first_name, last_name, username, id } = ctx.message.from
+        let mention
 
-      if (username) {
-        mention = `@${username}`
-      } else {
-        mention = `[${first_name || last_name}](tg://user?id=${id})`
-      }
+        if (username) {
+          mention = `@${username}`
+        } else {
+          mention = `[${first_name || last_name}](tg://user?id=${id})`
+        }
 
-      ctx.replyWithHTML(marked.parseInline(`${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
-    }
+        ctx.replyWithHTML(marked.parseInline(`${mention} Чтобы воспользоваться ботом, [нажми cюда](tg://user?id=${ctx.botInfo.id}) ;)`))
+      })
   })
 
   bot.command('help', async (ctx) => {
