@@ -26,7 +26,7 @@ const show_upcoming_rides = async (ctx) => {
       return Markup.button.callback(`${title.toString().toUpperCase()} / ${levels_cb[level]} / ${moment(date).locale('ru').format('DD.MM.YYYY, hh:mm')}`, `show_specific_ride#${_id}`)
     })
 
-    return ctx.reply('Запланированые поездки на ближайшую неделю\nВыберите поездку чтобы узнать подробнее или принять участие', Markup.inlineKeyboard(rides_markup_arr.slice(0, 7), { columns: 1 }))
+    return ctx.reply('Запланированые поездки на ближайшие 2 месяца\nВыберите поездку чтобы узнать подробнее или принять участие', Markup.inlineKeyboard(rides_markup_arr.slice(0, 61), { columns: 1 }))
   }
 
   return ctx.reply('😔 На ближайшую неделю ничего не запланировано')
