@@ -88,7 +88,7 @@ const register_actions = (bot) => {
   })
 
   bot.on('new_chat_members', (ctx) => {
-    const { first_name, last_name, username } = ctx.message.from
+    const { first_name, last_name, username } = ctx.message.new_chat_member
     const { id, title } = ctx.message.chat
 
     if (welcome_message[id.toString()]) {
@@ -102,7 +102,7 @@ const register_actions = (bot) => {
 
       const { link } = welcome_message[id.toString()]
 
-      ctx.replyWithHTML(marked.parseInline(`👋 Добро пожаловать в чат ${title}, ${mention}! Для хорошего старта - [ознакомьтесь с правилами сообщества](${link})`), { disable_web_page_preview: true })
+      ctx.replyWithHTML(marked.parseInline(`${mention}, 👋 Добро пожаловать в чат ${title}! Для хорошего старта - [ознакомьтесь с правилами сообщества](${link})`), { disable_web_page_preview: true })
     }
   })
 
