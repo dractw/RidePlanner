@@ -87,6 +87,8 @@ const register_actions = (bot) => {
     }
   })
 
+  bot.on('new_chat_members', (ctx) => console.log(ctx, ctx.message))
+
   const { NODE_ENV } = process.env
 
   console.info('Bot started, ver:', require('../../../package.json').version)
