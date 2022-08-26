@@ -21,7 +21,7 @@
   "dependencies": {
     "marked": "^4.0.14",
     "moment": "^2.29.2",
-    "mongoose": "^6.2.8",
+    "mongoose": "^6.4.6",
     "telegraf": "^4.6.0"
   },
   "devDependencies": {
